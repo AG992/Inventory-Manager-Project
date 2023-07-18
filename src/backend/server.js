@@ -2,13 +2,15 @@ const express = require('express')
 const app = express();
 const cors = require('cors')
 const cookieParser = require('cookie-parser')
+const knex = require('knex')( require('../../knexfile.js')[process.env.NODE_ENV || 'development'])
 const port = 8080;
 
 app.use(cors());
 app.use(cookieParser());
 
-app.get('/', (req, res) => {
-  res.send(json('TEST'));
+app.get('/gamelist', (req, res) => {
+  knex.select().from('game_list')
+    .then(data => res.send(data))
 })
 
 app.get('/get-cookie', (req, res) => {

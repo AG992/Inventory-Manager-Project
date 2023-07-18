@@ -6,19 +6,21 @@ function Home() {
   const [gameList, setGameList] = useState([]);
 
   const grabGames = async () => {
-    const request = await fetch('http://localhost:8080/gameslist')
+    const request = await fetch('http://localhost:8080/gamelist')
     const currentGameList = await request.json();
     setGameList(currentGameList);
   }
 
   useEffect(() => {
-
+    grabGames();
   }, [])
 
   return (
     <>
       <Account />
-      <GameDisplay gameList={gameList} />
+      <div>
+        <GameDisplay gameList={gameList} />
+      </div>
     </>
   )
 }
