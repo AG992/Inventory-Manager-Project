@@ -1,22 +1,24 @@
-import logo from './logo.svg';
+import React from 'react';
 import './App.css';
+import Popup from 'reactjs-popup';
+import Home from './components/Home';
 
 function App() {
   return (
     <div className="App">
+      <Home/>
       <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
+        <div>
+          <Popup trigger=
+              {<button> Click to open popup </button>}
+              position="right center">
+              <div>GeeksforGeeks</div>
+              <button onClick={async () => {
+                return await fetch('http://localhost:8080/get-cookie')
+                  .then(data => console.log(data))
+              }}>Click here</button>
+          </Popup>
+        </div>
       </header>
     </div>
   );

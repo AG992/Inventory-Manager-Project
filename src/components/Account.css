@@ -1,0 +1,19 @@
+#account-container {
+  background-color: #696D7D;
+  position: static;
+  width: 20%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content:space-evenly;
+  margin-right: 0;
+  border-radius: 20px;
+}
+.centered {
+  margin: auto;
+  width: 50%;
+}
+
+.account-field {
+  
+}
