@@ -74,8 +74,12 @@ function CreateGame() {
         }
         
         fetch('http://localhost:8080/create-game', newGameOptions)
-          .then(setTimeout(() => navigate('/')), 100)
-
+          .then(res => res.json())
+          .then(data => {
+            console.log(data);
+            setTimeout(() => navigate('/'), 100);
+          })
+          .catch((err) => console.log(err));
       }}>Submit your Entry!</button>
     </div>
   )

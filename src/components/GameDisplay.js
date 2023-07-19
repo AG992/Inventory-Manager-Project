@@ -47,7 +47,7 @@ function GameDisplay({gameList, resetGames, setResetGames }) {
                     </div>
                     <div className='game-edit-field'>
                       <label>Game Description: </label>
-                      <input type='text' onChange={(e) => setEditDesc(e.target.value)}/>
+                      <textarea onChange={(e) => setEditDesc(e.target.value)}/>
                     </div>
                     <div>
                       <button className='centered' onClick={async () => {
@@ -67,7 +67,12 @@ function GameDisplay({gameList, resetGames, setResetGames }) {
                         }
 
                         await fetch(`http://localhost:8080/editgame/${game.id}`, editOptions)
-                          .then(window.location.reload())
+                        .then(res => res.json())
+                        .then(data => {
+                          console.log(data);
+                          setResetGames(!resetGames);
+                        })
+                        .catch((err => console.log(err)));
                       }}>Submit Edits</button>
                     </div>
                   </div>
@@ -84,7 +89,6 @@ function GameDisplay({gameList, resetGames, setResetGames }) {
                 },
               }
               fetch(`http://localhost:8080/delete-game/${game.id}`, deleteOptions)
-                // .then(window.location.reload())
                 .then(res => res.json())
                 .then(data => {
                   console.log(data);

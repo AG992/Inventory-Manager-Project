@@ -1,7 +1,9 @@
 import React from 'react';
-import './Account.css'
+import './AccountInfo.css'
+import { useNavigate } from 'react-router-dom';
 
-function Account() {
+function AccountInfo() {
+  const navigate = useNavigate();
 
   return (
     <div className='centered' id='account-container'>
@@ -9,7 +11,9 @@ function Account() {
         <h3>Welcome!</h3>
       </div>
       <div className='account-field' id='account-create'>
-        Create an Account
+        <button onClick={() => {
+          navigate('/create-account');
+        }}>Create an Account</button>
       </div>
       <div className='account-field' id='account-login'>
         Login
@@ -18,4 +22,4 @@ function Account() {
   )
 }
 
-export default Account;
+export default AccountInfo;

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import Account from "./Account";
+import AccountInfo from "./AccountInfo.js";
 import GameDisplay from "./GameDisplay";
 import './Home.css';
 import { useNavigate } from "react-router-dom";
@@ -26,7 +26,7 @@ function Home() {
           navigate('/create-game')
         }}>Add a new game post</button>
       </div>
-      <Account />
+      <AccountInfo />
       <div>
         <GameDisplay gameList={gameList} resetGames={resetGames} setResetGames={setResetGames} />
       </div>
