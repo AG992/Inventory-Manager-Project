@@ -3,6 +3,7 @@ const app = express();
 const cors = require('cors')
 const cookieParser = require('cookie-parser')
 const knex = require('knex')( require('../../knexfile.js')[process.env.NODE_ENV || 'development'])
+const bodyParser = require('body-parser');
 const port = 8080;
 
 app.use(cors());
@@ -21,6 +22,22 @@ app.get('/get-cookie', (req, res) => {
 app.get('/receive-cookie', (req, res) => {
   console.log('Cookies: ', req.cookies)
 })
+
+app.put('/editgame/:id', bodyParser.json(), (req, res) => {
+  const id = Number(req.params.id);
+  const updateGame = req.body;
+  console.log(updateGame);
+  console.log(id);
+  knex('game_list')
+    .where({id: id})
+    .update({
+      title: updateGame.title,
+      release_date: updateGame.release_date,
+      developer: updateGame.developer,
+      description: updateGame.description,
+    })
+    .catch((err) => console.log(err));
+});
 
 app.listen(port, () => {
   console.log(`Listening on port: ${port}`)
