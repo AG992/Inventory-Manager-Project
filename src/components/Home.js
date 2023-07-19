@@ -2,12 +2,12 @@ import React, { useEffect, useState } from "react";
 import Account from "./Account";
 import GameDisplay from "./GameDisplay";
 import './Home.css';
-import { Route, Routes, useNavigate } from "react-router-dom";
-import CreateGame from "./CreateGame";
+import { useNavigate } from "react-router-dom";
 
 function Home() {
   const [gameList, setGameList] = useState([]);
   const navigate = useNavigate();
+  const [resetGames, setResetGames] = useState(true)
 
   const grabGames = async () => {
     const request = await fetch('http://localhost:8080/gamelist')
@@ -17,7 +17,7 @@ function Home() {
 
   useEffect(() => {
     grabGames();
-  }, [])
+  }, [resetGames])
 
   return (
     <>
@@ -28,12 +28,8 @@ function Home() {
       </div>
       <Account />
       <div>
-        <GameDisplay gameList={gameList} />
+        <GameDisplay gameList={gameList} resetGames={resetGames} setResetGames={setResetGames} />
       </div>
-      <Routes>
-        <Route path='/' element={<Home />} />
-        <Route path='/create-game' element={<CreateGame />} />
-      </Routes>
     </>
   )
 }

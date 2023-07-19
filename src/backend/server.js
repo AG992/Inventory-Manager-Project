@@ -14,14 +14,19 @@ app.get('/gamelist', (req, res) => {
     .then(data => res.send(data))
 })
 
-app.get('/get-cookie', (req, res) => {
-  res.cookie('name', 'John-Doe');
-  res.send('You\'ve been cookified!')
+app.get('/users', (req, res) => {
+  knex.select().from('users')
+    .then(data => res.send(data))
 })
 
-app.get('/receive-cookie', (req, res) => {
-  console.log('Cookies: ', req.cookies)
-})
+// app.get('/get-cookie', (req, res) => {
+//   res.cookie('name', 'John-Doe');
+//   res.send('You\'ve been cookified!')
+// })
+
+// app.get('/receive-cookie', (req, res) => {
+//   console.log('Cookies: ', req.cookies)
+// })
 
 app.put('/editgame/:id', bodyParser.json(), (req, res) => {
   const id = Number(req.params.id);
@@ -38,6 +43,30 @@ app.put('/editgame/:id', bodyParser.json(), (req, res) => {
     })
     .catch((err) => console.log(err));
 });
+
+app.post('/create-game', bodyParser.json(), (req, res) => {
+  const newGame = req.body;
+  console.log(newGame);
+  knex('game_list').insert({
+    user_id: newGame.user_id,
+    title: newGame.title,
+    release_date: newGame.release_date,
+    developer: newGame.developer,
+    description: newGame.description,
+  })
+  .catch((err) => console.log(err));
+})
+
+app.delete('/delete-game/:id', (req, res) => {
+  const id = Number(req.params.id)
+  console.log(id)
+  knex('game_list').where('id', id)
+    .del()
+    .then(res.status(200).send({
+      delete_status: 'Delete OK'
+    }))
+    .catch((err) => console.log(err))
+})
 
 app.listen(port, () => {
   console.log(`Listening on port: ${port}`)

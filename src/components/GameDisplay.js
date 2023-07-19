@@ -1,12 +1,15 @@
-import React, { useContext, useState } from "react";
+import React, { useEffect, useState } from "react";
 import './GameDisplay.css';
 import Popup from "reactjs-popup";
 
-function GameDisplay({gameList}) {
+function GameDisplay({gameList, resetGames, setResetGames }) {
   const [editTitle, setEditTitle] = useState('')
   const [editDate, setEditDate] = useState('')
   const [editDeveloper, setEditDeveloper] = useState('')
   const [editDesc, setEditDesc] = useState('')
+
+  useEffect(() => {
+  }, [gameList])
 
   return (
     <>
@@ -64,9 +67,7 @@ function GameDisplay({gameList}) {
                         }
 
                         await fetch(`http://localhost:8080/editgame/${game.id}`, editOptions)
-                          .then(() => {
-                            window.location.reload()
-                          })
+                          .then(window.location.reload())
                       }}>Submit Edits</button>
                     </div>
                   </div>
@@ -75,7 +76,22 @@ function GameDisplay({gameList}) {
               closeOnDocumentClick
             >
             </Popup>
-            <button className='game-delete-button' >Delete</button>
+            <button className='game-delete-button' onClick={() => {
+              const deleteOptions = {
+                method: 'DELETE',
+                headers:{
+                  'Content-Type': 'application/json'
+                },
+              }
+              fetch(`http://localhost:8080/delete-game/${game.id}`, deleteOptions)
+                // .then(window.location.reload())
+                .then(res => res.json())
+                .then(data => {
+                  console.log(data);
+                  setResetGames(!resetGames);
+                })
+                .catch((err) => console.log(err))
+            }}>Delete</button>
           </div>
         )
       })}
