@@ -14,7 +14,7 @@ function AccountInfo() {
   const navigate = useNavigate();
   const [username, setUsername] = useState();
   const [password, setPassword] = useState();
-  const {userLoggedIn, setUserLoggedIn} = useContext(AppContext);
+  const {user, setUser} = useContext(AppContext);
 
   async function loginHandler() {
     
@@ -28,7 +28,7 @@ function AccountInfo() {
           );
         } else {
           toast(`Login success! Welcome ${username}!`);
-          setUserLoggedIn(true);
+          setUser({loggedIn: true});
         }
       });
   }
@@ -37,7 +37,7 @@ function AccountInfo() {
     let req = await fetch('http://localhost:8080/clear-cookies', getOptions)
     let res = await req.json();
     console.log(res);
-    setUserLoggedIn(false);
+    setUser({loggedIn: false});
   }
 
   const PopupButton = <Popup
@@ -62,14 +62,17 @@ function AccountInfo() {
     <div className='centered' id='account-container'>
       <ToastContainer/>
       <div className='account-field' id='user-welcome'>
-        <h3>Welcome!</h3>
+        {user.loggedIn ? (<h3>{`Welcome ${user.username}!`}</h3>)
+          : (<h3>Welcome !</h3>
+        )}
       </div>
       <div className='account-field' id='account-create'>
         <button onClick={() => {
           navigate('/create-account');
         }}>Create an Account</button>
       </div>
-      {userLoggedIn ? <button onClick={logoutHandler}>Logout</button> : PopupButton}
+      {user.loggedIn ? (<button onClick={() => navigate('/your-posts')}>Your Posts</button>) : (<></>)}
+      {user.loggedIn ? <button onClick={logoutHandler}>Logout</button> : PopupButton}
     </div>
   )
 }

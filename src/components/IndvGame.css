@@ -1,0 +1,9 @@
+.game-information-field {
+  background-color: #696D7D;
+  text-align: center;
+}
+
+.home-button {
+  position: fixed;
+  left: 46%;
+}

@@ -6,10 +6,10 @@ import { useNavigate } from "react-router-dom";
 import { AppContext } from "../App.js";
 
 function Home() {
-  const [gameList, setGameList] = useState([]);
+  // const [gameList, setGameList] = useState([]);
+  const { gameList, setGameList } = useContext(AppContext);
   const navigate = useNavigate();
-
-  const {resetHome, userLoggedIn, setUserLoggedIn} = useContext(AppContext);
+  const {resetHome, user, setUser} = useContext(AppContext);
 
 
   const grabGames = async () => {
@@ -24,28 +24,28 @@ function Home() {
     });
     const res = await request.json();
     console.log('This is the Server response:', res);
-    res?.loggedIn ? setUserLoggedIn(true) : setUserLoggedIn(false);
-    console.log('This is the state value:', userLoggedIn)
+    res?.loggedIn ? setUser(res) : setUser({loggedIn: false});
+    console.log('This is the state value:', user.loggedIn)
+    console.log('This is the User Object:', user);
   }
 
   useEffect(() => {
     grabGames();
     checkLogin();
 
-  }, [resetHome, userLoggedIn])
+  }, [resetHome, user.loggedIn])
 
   return (
     <>
-    <button onClick={checkLogin}>Test</button>
       <div className='create-game-container'>
-        {userLoggedIn ? (<button className='create-game-button' onClick={() => {
+        {user.loggedIn ? (<button className='create-game-button' onClick={() => {
           navigate('/create-game')
         }}>Add a new game post</button>)
           : (<></>)}
       </div>
       <AccountInfo />
       <div>
-        <GameDisplay gameList={gameList} />
+        <GameDisplay />
       </div>
     </>
   )

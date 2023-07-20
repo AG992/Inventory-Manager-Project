@@ -26,11 +26,21 @@ app.get('/users', (req, res) => {
     .then(data => res.send(data))
 })
 
+app.get('/get-user/:user', async (req, res) => {  // Get a specific user
+  const userid = req.params.user;
+
+  const user = await knex.select('username').from('users').where({id: userid});
+  res.status(200).send(user[0]);
+})
+
 app.get('/check-cookie', (req, res) => {  //  Checks if a user is actively logged in
   const activeUsername = req.cookies.username;
-  // console.log(activeUsername);
+  console.log(activeUsername);
 
-  activeUsername ? res.status(200).send({ loggedIn: true })
+  activeUsername ? res.status(200).send({ 
+    loggedIn: true,
+    username: activeUsername
+  })
     : res.status(200).send({ loggedIn: false })
 })
 
