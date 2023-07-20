@@ -1,12 +1,14 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import './GameDisplay.css';
 import Popup from "reactjs-popup";
+import { AppContext } from "../App";
 
-function GameDisplay({gameList, resetGames, setResetGames }) {
+function GameDisplay({ gameList }) {
   const [editTitle, setEditTitle] = useState('')
   const [editDate, setEditDate] = useState('')
   const [editDeveloper, setEditDeveloper] = useState('')
   const [editDesc, setEditDesc] = useState('')
+  const {resetHome, setResetHome, userLoggedIn} = useContext(AppContext);
 
   useEffect(() => {
   }, [gameList])
@@ -70,7 +72,7 @@ function GameDisplay({gameList, resetGames, setResetGames }) {
                         .then(res => res.json())
                         .then(data => {
                           console.log(data);
-                          setResetGames(!resetGames);
+                          setResetHome(!resetHome);
                         })
                         .catch((err => console.log(err)));
                       }}>Submit Edits</button>
@@ -92,7 +94,7 @@ function GameDisplay({gameList, resetGames, setResetGames }) {
                 .then(res => res.json())
                 .then(data => {
                   console.log(data);
-                  setResetGames(!resetGames);
+                  setResetHome(!resetHome);
                 })
                 .catch((err) => console.log(err))
             }}>Delete</button>

@@ -3,11 +3,16 @@ const app = express();
 const cors = require('cors')
 const cookieParser = require('cookie-parser')
 const knex = require('knex')( require('../../knexfile.js')[process.env.NODE_ENV || 'development'])
-const bodyParser = require('body-parser');
 const port = 8080;
 
-app.use(cors());
+var corsOptions = {
+  origin: 'http://localhost:3000',
+  credentials:  true
+}
+
 app.use(cookieParser());
+app.use(cors(corsOptions));
+app.use(express.json())
 
 //////          GET REQUESTS          //////
 
@@ -21,18 +26,51 @@ app.get('/users', (req, res) => {
     .then(data => res.send(data))
 })
 
-// app.get('/get-cookie', (req, res) => {
-//   res.cookie('name', 'John-Doe');
-//   res.send('You\'ve been cookified!')
-// })
+app.get('/check-cookie', (req, res) => {  //  Checks if a user is actively logged in
+  const activeUsername = req.cookies.username;
+  // console.log(activeUsername);
 
-// app.get('/receive-cookie', (req, res) => {
-//   console.log('Cookies: ', req.cookies)
-// })
+  activeUsername ? res.status(200).send({ loggedIn: true })
+    : res.status(200).send({ loggedIn: false })
+})
+
+app.get('/login/user/:username-:password', async (req, res) => {  //  Checks if given username is in DB
+  const userInfo = req.params;
+  console.log(userInfo);
+  let accountMatch = false;
+
+  const users = await knex.select('username', 'password').from('users')
+  // console.log(users)
+  users.forEach((user) => {  //  Loop through usernames & passwords in DB, if match for both is found return true
+    if (user.username === userInfo.username) {
+      if (user.password === userInfo.password) {
+        return accountMatch = true;
+      }
+    } else accountMatch;
+  })
+
+  if (accountMatch) {
+    res.cookie('username', `${userInfo.username}`)
+    res.send({
+      message: 'Successful Login'
+    })
+  } else {
+    res.status(401).send({
+      message: 'Failed Login'
+    })
+  }
+})
+
+app.get('/clear-cookies', (req, res) => {  //  Clears browser localhost cookies
+  res.clearCookie('username');
+  res.status(200).send({
+    message: 'Cookies Cleared'
+  })
+})
 
 //////          PUT REQUESTS          //////
 
-app.put('/editgame/:id', bodyParser.json(), (req, res) => {
+app.put('/editgame/:id', (req, res) => {
   const id = Number(req.params.id);
   const updateGame = req.body;
   console.log(updateGame);
@@ -53,7 +91,7 @@ app.put('/editgame/:id', bodyParser.json(), (req, res) => {
 
 //////          POST REQUESTS          //////
 
-app.post('/create-game', bodyParser.json(), (req, res) => {
+app.post('/create-game', (req, res) => {
   const newGame = req.body;
   console.log(newGame);
   knex('game_list').insert({
@@ -69,7 +107,7 @@ app.post('/create-game', bodyParser.json(), (req, res) => {
   .catch((err) => console.log(err));
 })
 
-app.post('/create-account/', bodyParser.json(), async (req, res) => {
+app.post('/create-account/',  async (req, res) => {
   const newUser = req.body;
   let createNewUser = true;
   // console.log(newUser);
@@ -86,7 +124,12 @@ app.post('/create-account/', bodyParser.json(), async (req, res) => {
       username: newUser.username,
       password: newUser.password,
     })
-      .then(res.status(201).send({ message: 'User created OK' }))
+      .then(() => {
+        res.cookie('username', `${newUser.username}`);
+        res.status(201).send({
+          message: 'User created OK'
+        })
+      })
       .catch((err) => console.log(err));
   } else {
     res.status(400).send({ message: 'User already exists' })

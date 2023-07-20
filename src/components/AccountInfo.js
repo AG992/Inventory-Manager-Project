@@ -1,12 +1,66 @@
-import React from 'react';
+import React, { useContext, useState } from 'react';
 import './AccountInfo.css'
 import { useNavigate } from 'react-router-dom';
+import Popup from 'reactjs-popup';
+import { ToastContainer, toast } from 'react-toastify';
+import { AppContext } from '../App';
+
+const getOptions = {
+  method: 'GET',
+  credentials: 'include',
+}
 
 function AccountInfo() {
   const navigate = useNavigate();
+  const [username, setUsername] = useState();
+  const [password, setPassword] = useState();
+  const {userLoggedIn, setUserLoggedIn} = useContext(AppContext);
+
+  async function loginHandler() {
+    
+    await fetch(`http://localhost:8080/login/user/${username}-${password}`, getOptions)
+      .then(res => res.json())
+      .then((data) => {
+        // console.log(data.message);
+        if(data.message === 'Failed Login') {
+          return (
+              toast('Login failed! Username or password is wrong!')
+          );
+        } else {
+          toast(`Login success! Welcome ${username}!`);
+          setUserLoggedIn(true);
+        }
+      });
+  }
+
+  async function logoutHandler() {
+    let req = await fetch('http://localhost:8080/clear-cookies', getOptions)
+    let res = await req.json();
+    console.log(res);
+    setUserLoggedIn(false);
+  }
+
+  const PopupButton = <Popup
+    trigger={() => (
+      <button className='account-field' id='account-login'>Login</button>
+    )}
+    position='bottom center'
+    children={() => {
+      return (
+        <div className='popup-container centered'>
+          <label>Username: </label>
+          <input type='text' onChange={(e) => setUsername(e.target.value)} />
+          <label>Password: </label>
+          <input type='password' onChange={(e) => setPassword(e.target.value)} />
+          <button onClick={loginHandler}>Login</button>
+        </div>
+      )
+    }}
+  />
 
   return (
     <div className='centered' id='account-container'>
+      <ToastContainer/>
       <div className='account-field' id='user-welcome'>
         <h3>Welcome!</h3>
       </div>
@@ -15,9 +69,7 @@ function AccountInfo() {
           navigate('/create-account');
         }}>Create an Account</button>
       </div>
-      <div className='account-field' id='account-login'>
-        Login
-      </div>
+      {userLoggedIn ? <button onClick={logoutHandler}>Logout</button> : PopupButton}
     </div>
   )
 }

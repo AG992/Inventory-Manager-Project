@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import './CreateGame.css'
-import Popup from "reactjs-popup";
 
 function CreateGame() {
   const [userList, setUserList] = useState();
