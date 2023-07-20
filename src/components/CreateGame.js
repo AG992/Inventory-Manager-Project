@@ -1,20 +1,21 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import './CreateGame.css'
+import { AppContext } from "../App";
 
 function CreateGame() {
-  const [userList, setUserList] = useState();
-  const [newGamePoster, setNewGamePoster] = useState(0);
+  const [userId, setUserId] = useState();
   const [newGameTitle, setNewGameTitle] = useState('');
   const [newGameReleaseDate, setNewGameReleaseDate] = useState('');
   const [newGameDeveloper, setNewGameDeveloper] = useState('');
   const [newGameDesc, setNewGameDesc] = useState('');
+  const { user } = useContext(AppContext);
   const navigate = useNavigate();
 
   const grabUsers = async () => {
-    const request = await fetch('http://localhost:8080/users');
-    const fetchedUsers = await request.json();
-    setUserList(fetchedUsers);
+    const request = await fetch(`http://localhost:8080/get-userid/${user.username}`);
+    const fetchedUser = await request.json();
+    setUserId(fetchedUser.id);
   }
 
   useEffect(() => {
@@ -27,10 +28,7 @@ function CreateGame() {
       <Link to='/'><h4 className="centered">or head back home... :(</h4></Link>
       <div className='create-game-field'>
         <label>Account Poster: </label>
-        <select name='user-select' id='user-select' onChange={(e) => setNewGamePoster(e.target.selectedIndex)}>
-          <option value='0' key='0'> </option>
-          {userList?.map((user) => <option value={user.id} key={user.id}>{user.username}</option>)}
-        </select>
+        <input type="text" name='user-select' id='user-select' value={user.username} readOnly/>
       </div>
       <div className='create-game-field'>
         <label>Game Title: </label>
@@ -55,9 +53,8 @@ function CreateGame() {
         // On click user's data get's sent to the server / DB
         // DB is updated with user's data
         // User is sent back to the Home Page
-        const newGameFields = [newGamePoster, newGameTitle, newGameReleaseDate, newGameDeveloper, newGameDesc]
         const newGame = {
-          user_id: newGamePoster, 
+          user_id: userId, 
           title: newGameTitle,
           release_date: newGameReleaseDate,
           developer: newGameDeveloper,
@@ -75,7 +72,7 @@ function CreateGame() {
         fetch('http://localhost:8080/create-game', newGameOptions)
           .then(res => res.json())
           .then(data => {
-            console.log(data);
+            // console.log(data);
             setTimeout(() => navigate('/'), 100);
           })
           .catch((err) => console.log(err));

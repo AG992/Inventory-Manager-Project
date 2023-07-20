@@ -23,10 +23,10 @@ function Home() {
       credentials: 'include',
     });
     const res = await request.json();
-    console.log('This is the Server response:', res);
+    // console.log('This is the Server response:', res);
     res?.loggedIn ? setUser(res) : setUser({loggedIn: false});
-    console.log('This is the state value:', user.loggedIn)
-    console.log('This is the User Object:', user);
+    // console.log('This is the state value:', user.loggedIn)
+    // console.log('This is the User Object:', user);
   }
 
   useEffect(() => {
@@ -45,7 +45,7 @@ function Home() {
       </div>
       <AccountInfo />
       <div>
-        <GameDisplay />
+        <GameDisplay gameList={gameList}/>
       </div>
     </>
   )

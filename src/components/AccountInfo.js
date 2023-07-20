@@ -36,7 +36,7 @@ function AccountInfo() {
   async function logoutHandler() {
     let req = await fetch('http://localhost:8080/clear-cookies', getOptions)
     let res = await req.json();
-    console.log(res);
+    // console.log(res);
     setUser({loggedIn: false});
   }
 

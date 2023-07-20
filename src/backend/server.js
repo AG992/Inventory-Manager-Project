@@ -26,16 +26,25 @@ app.get('/users', (req, res) => {
     .then(data => res.send(data))
 })
 
-app.get('/get-user/:user', async (req, res) => {  // Get a specific user
-  const userid = req.params.user;
+app.get('/get-username/:userid', async (req, res) => {  // Get a specific user by ID & sends back username
+  const userid = req.params.userid;
 
   const user = await knex.select('username').from('users').where({id: userid});
   res.status(200).send(user[0]);
 })
 
+app.get('/get-userid/:username', async (req, res) => {  // Get a specific user by username & sends back ID
+  const username = req.params.username;
+  // console.log('UserID Route username: ', username);
+
+  const user = await knex.select('id').from('users').where({username: username});
+  // console.log('This is the userid route: ', user);
+  res.status(200).send(user[0]);
+})
+
 app.get('/check-cookie', (req, res) => {  //  Checks if a user is actively logged in
   const activeUsername = req.cookies.username;
-  console.log(activeUsername);
+  // console.log(activeUsername);
 
   activeUsername ? res.status(200).send({ 
     loggedIn: true,
@@ -46,7 +55,7 @@ app.get('/check-cookie', (req, res) => {  //  Checks if a user is actively logge
 
 app.get('/login/user/:username-:password', async (req, res) => {  //  Checks if given username is in DB
   const userInfo = req.params;
-  console.log(userInfo);
+  // console.log(userInfo);
   let accountMatch = false;
 
   const users = await knex.select('username', 'password').from('users')
@@ -83,8 +92,8 @@ app.get('/clear-cookies', (req, res) => {  //  Clears browser localhost cookies
 app.put('/editgame/:id', (req, res) => {
   const id = Number(req.params.id);
   const updateGame = req.body;
-  console.log(updateGame);
-  console.log(id);
+  // console.log(updateGame);
+  // console.log(id);
   knex('game_list')
     .where({id: id})
     .update({
@@ -103,7 +112,7 @@ app.put('/editgame/:id', (req, res) => {
 
 app.post('/create-game', (req, res) => {
   const newGame = req.body;
-  console.log(newGame);
+  // console.log(newGame);
   knex('game_list').insert({
     user_id: newGame.user_id,
     title: newGame.title,
@@ -150,7 +159,7 @@ app.post('/create-account/',  async (req, res) => {
 
 app.delete('/delete-game/:id', (req, res) => {
   const id = Number(req.params.id)
-  console.log(id)
+  // console.log(id)
   knex('game_list').where('id', id)
     .del()
     .then(res.status(200).send({

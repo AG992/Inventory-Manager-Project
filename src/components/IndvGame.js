@@ -8,13 +8,13 @@ function IndvGame() {
   const navigate = useNavigate();
 
   let selectedGame = useParams()
-  console.log(selectedGame);
+  // console.log(selectedGame);
   const { gameList } = useContext(AppContext);
   const filteredGame = gameList.filter((game) => (`${game.id}` === selectedGame.id))
-  console.log(filteredGame[0]);
+  // console.log(filteredGame[0]);
 
   const grabUserNames = async () => {
-    const req = await fetch(`http://localhost:8080/get-user/${filteredGame[0].user_id}`);
+    const req = await fetch(`http://localhost:8080/get-username/${filteredGame[0].user_id}`);
     const res = await req.json();
     // console.log(res);
     setPostCreator(res.username);
