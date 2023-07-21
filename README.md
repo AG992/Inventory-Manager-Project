@@ -20,11 +20,12 @@ The utilities used to make this all work together is React, a postgres docker im
      1. If running from the root folder enter the command "( cd ./src/backend && npx nodemon server.js)"
   6. Lastly, from your root folder run "npm start" & your good to go!
      
-!([Initial Wireframe.png](https://github.com/AG992/Inventory-Manager-Project/blob/master/Initial%20Wireframe.png))
+![Initial Wireframe](https://github.com/AG992/Inventory-Manager-Project/assets/131806332/929805cc-213e-444d-80ae-f479ddb62fce)
 ### `npm start`
 
 Runs the app in the development mode.\
 Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
 
 The page will reload when you make changes.\
+
 You may also see any lint errors in the console.
