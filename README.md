@@ -19,13 +19,15 @@ The utilities used to make this all work together is React, a postgres docker im
   5. Next, you'll need to open a 2nd terminal so that the server can run. I recommend using a 2nd terminal in VS Code...
      1. If running from the root folder enter the command "( cd ./src/backend && npx nodemon server.js)"
   6. Lastly, from your root folder run "npm start" & your good to go!
-     
+
+# Usage
+Usage is pretty self-explanatory upon loading the page.
+Game information will be displayed to you if you ran the migrations, seed files, & server correctly.
+From the main page all you can do w/o an account is view the game information displayed.
+Upon creating an account, however you can see more options & functions afforded to you such as creating a new game, editing game information, etc.
+.
+I've went ahead & attached my Wireframe during initial planning & construction of this app.
+Play around & have fun with the project!
+.
+
 ![Initial Wireframe](https://github.com/AG992/Inventory-Manager-Project/assets/131806332/929805cc-213e-444d-80ae-f479ddb62fce)
-### `npm start`
-
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
-
-The page will reload when you make changes.\
-
-You may also see any lint errors in the console.
