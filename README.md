@@ -12,7 +12,7 @@ The utilities used to make this all work together are React, a postgres docker i
        2. docker run --rm --name pg-docker -e POSTGRES_PASSWORD=docker -d -p 5432:5432 -v $HOME/docker/volumes/**inventory**:/var/lib/postgresql/data postgres
 
   3. Navigate into the root directory of your cloned repo & run the command "npm install" to install all the node modules required for the app
-  4. Now we need to setup the database with information. From the root folder you cloned into...
+  4. Now we need to setup the database with information. From the root folder...
      1. Run "( cd ./src/backend && npx knex migrate:latest )"
      2. Run "( cd ./src/backend && npx knex seed:run )"
     
