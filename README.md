@@ -20,7 +20,7 @@ The utilities used to make this all work together is React, a postgres docker im
      1. If running from the root folder enter the command "( cd ./src/backend && npx nodemon server.js)"
   6. Lastly, from your root folder run "npm start" & your good to go!
      
-
+![WireFrame](Initial Wireframe.png)
 ### `npm start`
 
 Runs the app in the development mode.\
