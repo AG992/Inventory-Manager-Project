@@ -1,7 +1,7 @@
 # Video Game Information Manager
 
 This app is an app that allows you to add, edit, delete, & read game information from your personal database.
-The utilities used to make this all work together is React, a postgres docker image running as a container, an express server, & Google Chrome Browser.
+The utilities used to make this all work together are React, a postgres docker image running as a container, an express server, & Google Chrome Browser.
 
 # Setup
 ## To get get started you'll need to...
