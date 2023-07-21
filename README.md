@@ -9,8 +9,8 @@ The utilities used to make this all work together is React, a postgres docker im
   2. run a docker container of a postgres image with default configurations as shown in the Galvanize [Connecting to PostgreSQL lesson](https://learn-2.galvanize.com/cohorts/3593/blocks/655/content_files/lessons/connecting_to_postgres.md)
     * Here's the specific commands needed to run...
        1. 
-       1. mkdir -p $HOME/docker/volumes/inventory
-       2. docker run --rm --name pg-docker -e POSTGRES_PASSWORD=docker -d -p 5432:5432 -v $HOME/docker/volumes/inventory:/var/lib/postgresql/data postgres
+       1. mkdir -p $HOME/docker/volumes/**inventory**
+       2. docker run --rm --name pg-docker -e POSTGRES_PASSWORD=docker -d -p 5432:5432 -v $HOME/docker/volumes/**inventory**:/var/lib/postgresql/data postgres
        3. docker exec -it <PSQL-Container-ID> bash
 
 ### `npm start`
