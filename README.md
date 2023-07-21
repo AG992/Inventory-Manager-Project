@@ -26,7 +26,7 @@ The utilities used to make this all work together is React, a postgres docker im
   - From the main page all you can do w/o an account is view the game information displayed.
   - Upon creating an account, however you can see more options & functions afforded to you such as creating a new game, editing game information, etc.
 .
-I've went ahead & attached my Wireframe during initial planning & construction of this app.
+  - I've went ahead & attached my Wireframe during initial planning & construction of this app.
 Play around & have fun with the project!
 .
 
