@@ -1,10 +1,11 @@
-# Getting Started with Create React App
+# Video Game Information Manager
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+This app is an app that allows you to add, edit, delete, & read game information from your personal database.
+The utilities used to make this all work together is React, a postgres docker image running as a container, an express server, & Google Chrome Browser.
 
-## Available Scripts
-
-In the project directory, you can run:
+# Setup
+## To get get started you'll need to...
+  1. 
 
 ### `npm start`
 
