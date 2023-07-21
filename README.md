@@ -5,7 +5,8 @@ The utilities used to make this all work together is React, a postgres docker im
 
 # Setup
 ## To get get started you'll need to...
-  1. 
+  1. clone this repo into a folder of your choosing
+  2. run a docker container with the postgres image with default configurations as shown in the Galvanize [Connecting to PostgreSQL](https://learn-2.galvanize.com/cohorts/3593/blocks/655/content_files/lessons/connecting_to_postgres.md)
 
 ### `npm start`
 
