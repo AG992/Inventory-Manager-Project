@@ -25,9 +25,9 @@ The utilities used to make this all work together is React, a postgres docker im
   - Game information will be displayed to you if you ran the migrations, seed files, & server correctly.
   - From the main page all you can do w/o an account is view the game information displayed.
   - Upon creating an account, however you can see more options & functions afforded to you such as creating a new game, editing game information, etc.
-.
+
   - I've went ahead & attached my Wireframe during initial planning & construction of this app.
 Play around & have fun with the project!
-.
+
 
 ![Initial Wireframe](https://github.com/AG992/Inventory-Manager-Project/assets/131806332/929805cc-213e-444d-80ae-f479ddb62fce)
