@@ -22,7 +22,7 @@ The utilities used to make this all work together is React, a postgres docker im
 
 # Usage
   - Usage is pretty self-explanatory upon loading the page.
-Game information will be displayed to you if you ran the migrations, seed files, & server correctly.
+  - Game information will be displayed to you if you ran the migrations, seed files, & server correctly.
 From the main page all you can do w/o an account is view the game information displayed.
 Upon creating an account, however you can see more options & functions afforded to you such as creating a new game, editing game information, etc.
 .
